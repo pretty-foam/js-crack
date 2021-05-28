@@ -22,11 +22,21 @@ md.update(sign_str.encode())
 sign = md.hexdigest()
 
 #i为关键字key，salt就是salt，sign为sign，lts为lts
-payload = "i={}&from=AUTO&to=AUTO&smartresult=dict\
-&client=fanyideskweb&salt={}&\
-sign={}&lts={}\
-&bv=9ff8102373b1562471f4b6881a5653e9&doctype=json\
-&version=2.1&keyfrom=fanyi.web&action=FY_BY_REALTlME".format(key,salt,sign,lts)
+payload = {
+    'i': key,
+    'from': 'AUTO',
+    'to': 'AUTO',
+    'smartresult': 'dict',
+    'client': 'fanyideskweb',
+    'salt': salt,
+    'sign': sign,
+    'lts': lts,
+    'bv': '9ff8102373b1562471f4b6881a5653e9',
+    'doctype': 'json',
+    'version': '2.1',
+    'keyfrom': 'fanyi.web',
+    'action': 'FY_BY_REALTlME'
+}
 
 
 headers = {
@@ -47,7 +57,7 @@ headers = {
   'Accept-Language': 'zh-CN,zh;q=0.9',
   'Cookie': 'OUTFOX_SEARCH_USER_ID=-1227696632@10.169.0.83; JSESSIONID=aaa6VKnhPaRlthWkgJXMx; OUTFOX_SEARCH_USER_ID_NCOO=76047885.09383464; DICT_UGC=be3af0da19b5c5e6aa4e17bd8d90b28a|; JSESSIONID=abc0rt8wPcO7G5XpuJXMx; _ntes_nnid=8ded6b98659a06aadc89bc17cb882ed1,1622181498729; ___rl__test__cookies=1622183211868'
 }
-#data需要编码为utf-8，不然中文翻译会报错
-response = requests.request("POST", url, headers=headers, data=payload.encode("utf-8"))
+
+response = requests.request("POST", url, headers=headers, data=payload)
 
 print(response.json())
